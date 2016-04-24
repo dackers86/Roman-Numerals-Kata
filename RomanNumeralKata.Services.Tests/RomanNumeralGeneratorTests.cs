@@ -88,18 +88,18 @@ namespace RomanNumeralKata.Services.Tests
             Assert.Equal(actual, expected);
         }
 
-        //[Fact]
-        //public void WhenALargerNumberIsSubstituted_ThenTheNextSymbolReplacesTheFourth()
-        //{
-        //    // Arrange
-        //    var expected = "IX";
-        //    var service = new RomanNumeralGeneratorService();
+        [Fact]
+        public void WhenALargeNumberIsCalculated_ThenACorrectResultShouldbeReturned()
+        {
+            // Arrange
+            var expected = "MMMCMXCIX";
+            var service = new RomanNumeralGeneratorService();
 
-        //    // Act
-        //    var actual = service.Generate(9);
+            // Act
+            var actual = service.Generate(3999);
 
-        //    // Assert
-        //    Assert.Equal(actual, expected);
-        //}
+            // Assert
+            Assert.Equal(actual, expected);
+        }
     }
 }

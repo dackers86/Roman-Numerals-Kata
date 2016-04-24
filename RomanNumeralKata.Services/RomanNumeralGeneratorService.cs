@@ -11,75 +11,45 @@ namespace RomanNumeralKata.Services
     {
         private Dictionary<string, int> _symbols = new Dictionary<string, int>()
         {
-            { "X", 10 }, { "V", 5 }, { "I", 1 }
+             { "I", 1 }, { "II", 2 }, { "III", 3 }, { "IV", 4 }, { "V", 5 }, { "VI", 6 }, { "VII", 7 } , { "VIII", 8 }, { "IX", 9 },
+             { "X", 10 }, { "XX", 20 }, { "XXX", 30 }, { "XL", 40 }, { "L", 50 }, { "LX", 60 }, { "LXX", 70 } , { "LXXX", 80 }, { "XC", 90 },
+             { "C", 100 }, { "CC", 200 }, { "CCC", 300 }, { "CD", 400 }, { "D", 500 }, { "DC", 600 }, { "DCC", 700 } , { "DCCC", 800 }, { "CM", 900 },
+             { "M", 1000 }
         };
 
 
         public string Generate(int number)
         {
-            var numeral =  GetSymbol(number);
-
-            return FormatNumerals(numeral);
-        }
-
-        private string GetSymbol(int number)
-        {
-            var _runningTotal = number;
-            var _result = string.Empty;
-
-            do
-            {
-                var entry = GetNextSymbol(_runningTotal);
-                _runningTotal -= entry.Value;
-                _result += entry.Key;
-            }
-            while (_runningTotal > 0);
-
-            return _result;
-        }
-
-        private KeyValuePair<string, int> GetNextSymbol(int runningTotal)
-        {
-            return _symbols.OrderByDescending(x => x.Key)
-                           .Where(x => x.Value <= runningTotal)
-                           .FirstOrDefault();
-        }
-
-        private string GetNextKey(string currentSymbol)
-        {
-            if(string.IsNullOrEmpty(currentSymbol))
-            {
-                return _symbols.OrderBy(x => x.Key)
-                               .Skip(1)
-                               .Select(x => x.Key)
-                               .FirstOrDefault();
-            }
-
-            return _symbols.OrderBy(x => x.Key)
-                    .SkipWhile(x => x.Key != currentSymbol)
-                    .Skip(1)
-                    .Select(x => x.Key)
-                    .FirstOrDefault();
-        }
-
-        private string FormatNumerals(string numeral)
-        {
-            var repeatedKey = numeral.ToCharArray()
-                                      .GroupBy(x => x)
-                                      .Where(y => y.Count() > 3)
-                                      .Select(z => new string(z.Key, 4))
-                                      .ToList();
-
             var result = string.Empty;
-            var currentSymbol = numeral[0].ToString() != "I" ? numeral[0].ToString() : string.Empty;
-            var nextSymbol = GetNextKey(currentSymbol);
 
-            foreach (var key in repeatedKey)
+            var numberArray = number.ToString()
+                                    .Select((item, index) => item.ToString()
+                                    .PadRight(number.ToString().Length - index, '0'))
+                                    .ToList();
+
+            foreach (var num in numberArray)
             {
-                numeral = numeral.Replace(string.Format("{0}{1}", currentSymbol , key), string.Format("{0}{1}", key[0], nextSymbol));
+                var current_value = int.Parse(num);
+
+                if (current_value >= 1000)
+                {
+                    for (var i = 1; i <= current_value / 1000; i++)
+                    {
+                        result += _symbols.Where(x => x.Value == 1000)
+                                            .Select(x => x.Key)
+                                            .FirstOrDefault();
+                    }
+                }
+                else
+                {
+
+                    result += _symbols.Where(x => x.Value == current_value)
+                        .Select(x => x.Key)
+                        .FirstOrDefault();
+                }
             }
 
-            return numeral;
+            return result;
         }
     }
 }
