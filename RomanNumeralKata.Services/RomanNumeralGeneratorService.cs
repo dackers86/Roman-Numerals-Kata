@@ -76,7 +76,7 @@ namespace RomanNumeralKata.Services
 
             foreach (var key in repeatedKey)
             {
-                numeral = numeral.Replace(string.Format("{0}{1}", currentSymbol , key), string.Format("I{0}", nextSymbol));
+                numeral = numeral.Replace(string.Format("{0}{1}", currentSymbol , key), string.Format("{0}{1}", key[0], nextSymbol));
             }
 
             return numeral;
