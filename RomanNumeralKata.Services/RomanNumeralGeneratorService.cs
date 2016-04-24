@@ -47,6 +47,14 @@ namespace RomanNumeralKata.Services
 
         private string GetNextKey(string currentSymbol)
         {
+            if(string.IsNullOrEmpty(currentSymbol))
+            {
+                return _symbols.OrderBy(x => x.Key)
+                               .Skip(1)
+                               .Select(x => x.Key)
+                               .FirstOrDefault();
+            }
+
             return _symbols.OrderBy(x => x.Key)
                     .SkipWhile(x => x.Key != currentSymbol)
                     .Skip(1)
@@ -56,36 +64,22 @@ namespace RomanNumeralKata.Services
 
         private string FormatNumerals(string numeral)
         {
-            //var result = string.Empty;
-
-            //if (numeral == "IIII")
-            //{
-            //    result = numeral.Replace("IIII", "IV");
-            //}
-            //else if(numeral == "VIIII")
-            //{
-            //    result = numeral.Replace("VIIII", "IX");
-            //}
-            //else
-            //{
-            //    result = numeral;
-            //}
-
-            //return result;
+            var repeatedKey = numeral.ToCharArray()
+                                      .GroupBy(x => x)
+                                      .Where(y => y.Count() > 3)
+                                      .Select(z => new string(z.Key, 4))
+                                      .ToList();
 
             var result = string.Empty;
-            var currentSymbol = numeral[0].ToString();
+            var currentSymbol = numeral[0].ToString() != "I" ? numeral[0].ToString() : string.Empty;
             var nextSymbol = GetNextKey(currentSymbol);
 
-            if (numeral.Contains("IIII"))
+            foreach (var key in repeatedKey)
             {
-                result = numeral.Replace(string.Format("{0}IIII", currentSymbol != "I" ? numeral[0].ToString() : string.Empty), string.Format("I{0}", nextSymbol));
+                numeral = numeral.Replace(string.Format("{0}{1}", currentSymbol , key), string.Format("I{0}", nextSymbol));
             }
-            else
-            {
-                return numeral;
-            }
-            return result;
+
+            return numeral;
         }
     }
 }
