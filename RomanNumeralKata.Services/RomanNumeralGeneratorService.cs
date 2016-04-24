@@ -19,6 +19,13 @@ namespace RomanNumeralKata.Services
                 {
                     return "V";
                 }
+
+
+                if (number == 10)
+                {
+                    return "X";
+                }
+
                 result += "I";
             }
 
