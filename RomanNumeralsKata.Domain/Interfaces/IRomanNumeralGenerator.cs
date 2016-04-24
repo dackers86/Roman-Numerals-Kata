@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RomanNumeralsKata.Domain.Interfaces
 {
-    public interface RomanNumeralGenerator
+    public interface IRomanNumeralGenerator
     {
         string Generate(int number);
     }

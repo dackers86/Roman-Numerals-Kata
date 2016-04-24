@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{49BD9B9E-8D53-4C33-B88F-7DCAF7C3095B}</ProjectGuid>
+    <ProjectGuid>{BB7A3501-9C0A-4C4A-89FE-C389C5C63DBD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RomanNumeralsKata.Domain</RootNamespace>
-    <AssemblyName>RomanNumeralsKata.Domain</AssemblyName>
+    <RootNamespace>RomanNumeralKata.Services</RootNamespace>
+    <AssemblyName>RomanNumeralKata.Services</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -41,8 +41,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\IRomanNumeralGenerator.cs" />
+    <Compile Include="RomanNumeralGeneratorService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RomanNumeralsKata.Domain\RomanNumeralsKata.Domain.csproj">
+      <Project>{49bd9b9e-8d53-4c33-b88f-7dcaf7c3095b}</Project>
+      <Name>RomanNumeralsKata.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
