@@ -74,8 +74,6 @@ namespace RomanNumeralKata.Services.Tests
             Assert.Equal(actual, expected);
         }
 
-
-
         [Fact]
         public void WhenALargerNumberIsSubstituted_ThenTheNextSymbolReplacesTheFourth()
         {

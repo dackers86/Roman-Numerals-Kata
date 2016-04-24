@@ -40,26 +40,51 @@ namespace RomanNumeralKata.Services
 
         private KeyValuePair<string, int> GetNextSymbol(int runningTotal)
         {
-            return _symbols.Where(x => x.Value <= runningTotal).FirstOrDefault();
+            return _symbols.OrderByDescending(x => x.Key)
+                           .Where(x => x.Value <= runningTotal)
+                           .FirstOrDefault();
+        }
+
+        private string GetNextKey(string currentSymbol)
+        {
+            return _symbols.OrderBy(x => x.Key)
+                    .SkipWhile(x => x.Key != currentSymbol)
+                    .Skip(1)
+                    .Select(x => x.Key)
+                    .FirstOrDefault();
         }
 
         private string FormatNumerals(string numeral)
         {
-            var result = string.Empty;
+            //var result = string.Empty;
 
-            if (numeral == "IIII")
+            //if (numeral == "IIII")
+            //{
+            //    result = numeral.Replace("IIII", "IV");
+            //}
+            //else if(numeral == "VIIII")
+            //{
+            //    result = numeral.Replace("VIIII", "IX");
+            //}
+            //else
+            //{
+            //    result = numeral;
+            //}
+
+            //return result;
+
+            var result = string.Empty;
+            var currentSymbol = numeral[0].ToString();
+            var nextSymbol = GetNextKey(currentSymbol);
+
+            if (numeral.Contains("IIII"))
             {
-                result = numeral.Replace("IIII", "IV");
-            }
-            else if(numeral == "VIIII")
-            {
-                result = numeral.Replace("VIIII", "IX");
+                result = numeral.Replace(string.Format("{0}IIII", currentSymbol != "I" ? numeral[0].ToString() : string.Empty), string.Format("I{0}", nextSymbol));
             }
             else
             {
-                result = numeral;
+                return numeral;
             }
-
             return result;
         }
     }
