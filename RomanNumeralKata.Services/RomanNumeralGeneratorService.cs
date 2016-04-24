@@ -17,7 +17,12 @@ namespace RomanNumeralKata.Services
 
         public string Generate(int number)
         {
-            return GetSymbol(number);
+            var result =  GetSymbol(number);
+
+            var substiuted = result.Replace("IIII", "IV");
+
+            return substiuted;
+
         }
 
         private string GetSymbol(int number)
