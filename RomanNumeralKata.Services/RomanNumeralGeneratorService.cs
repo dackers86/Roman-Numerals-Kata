@@ -11,12 +11,14 @@ namespace RomanNumeralKata.Services
     {
         public string Generate(int number)
         {
-            if (number == 1)
+            var result = string.Empty;
+
+            for(var x = 0; x<number; x++)
             {
-                return "I";
+                result += "I";
             }
 
-            return "II";
+            return result;
         }
     }
 }
