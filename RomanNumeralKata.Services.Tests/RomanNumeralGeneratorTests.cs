@@ -73,5 +73,21 @@ namespace RomanNumeralKata.Services.Tests
             // Assert
             Assert.Equal(actual, expected);
         }
+
+
+
+        [Fact]
+        public void WhenALargerNumberIsSubstituted_ThenTheNextSymbolReplacesTheFourth()
+        {
+            // Arrange
+            var expected = "IX";
+            var service = new RomanNumeralGeneratorService();
+
+            // Act
+            var actual = service.Generate(9);
+
+            // Assert
+            Assert.Equal(actual, expected);
+        }
     }
 }

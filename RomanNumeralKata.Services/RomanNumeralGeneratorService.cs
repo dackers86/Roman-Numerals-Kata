@@ -17,12 +17,9 @@ namespace RomanNumeralKata.Services
 
         public string Generate(int number)
         {
-            var result =  GetSymbol(number);
+            var numeral =  GetSymbol(number);
 
-            var substiuted = result.Replace("IIII", "IV");
-
-            return substiuted;
-
+            return FormatNumerals(numeral);
         }
 
         private string GetSymbol(int number)
@@ -32,14 +29,38 @@ namespace RomanNumeralKata.Services
 
             do
             {
-                var entry = _symbols.Where(x => x.Value <= number).FirstOrDefault();
+                var entry = GetNextSymbol(_runningTotal);
                 _runningTotal -= entry.Value;
                 _result += entry.Key;
             }
             while (_runningTotal > 0);
 
             return _result;
+        }
 
+        private KeyValuePair<string, int> GetNextSymbol(int runningTotal)
+        {
+            return _symbols.Where(x => x.Value <= runningTotal).FirstOrDefault();
+        }
+
+        private string FormatNumerals(string numeral)
+        {
+            var result = string.Empty;
+
+            if (numeral == "IIII")
+            {
+                result = numeral.Replace("IIII", "IV");
+            }
+            else if(numeral == "VIIII")
+            {
+                result = numeral.Replace("VIIII", "IX");
+            }
+            else
+            {
+                result = numeral;
+            }
+
+            return result;
         }
     }
 }
