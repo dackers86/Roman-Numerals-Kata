@@ -101,5 +101,19 @@ namespace RomanNumeralKata.Services.Tests
             // Assert
             Assert.Equal(actual, expected);
         }
+
+        [Fact]
+        public void WhenANumberOver3999IsProvided_ThenAnErrorMessageIsReturned()
+        {
+            // Arrange
+            var expected = "Please enter a number less than 3999";
+            var service = new RomanNumeralGeneratorService();
+
+            // Act
+            var actual = service.Generate(4000);
+
+            // Assert
+            Assert.Equal(actual, expected);
+        }
     }
 }

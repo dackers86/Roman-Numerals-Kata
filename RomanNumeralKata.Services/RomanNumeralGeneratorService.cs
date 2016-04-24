@@ -20,12 +20,19 @@ namespace RomanNumeralKata.Services
 
         public string Generate(int number)
         {
+            if(number > 3999)
+            {
+                return "Please enter a number less than 3999";
+            }
+
+            return CalculateNumerals(number);
+        }
+
+        private string CalculateNumerals(int number)
+        {
             var result = string.Empty;
 
-            var numberArray = number.ToString()
-                                    .Select((item, index) => item.ToString()
-                                    .PadRight(number.ToString().Length - index, '0'))
-                                    .ToList();
+            var numberArray = ExtractIntoTenThousends(number);
 
             foreach (var num in numberArray)
             {
@@ -33,23 +40,44 @@ namespace RomanNumeralKata.Services
 
                 if (current_value >= 1000)
                 {
-                    for (var i = 1; i <= current_value / 1000; i++)
-                    {
-                        result += _symbols.Where(x => x.Value == 1000)
-                                            .Select(x => x.Key)
-                                            .FirstOrDefault();
-                    }
+                    CalculateThousends(current_value, result);
                 }
                 else
                 {
-
-                    result += _symbols.Where(x => x.Value == current_value)
-                        .Select(x => x.Key)
-                        .FirstOrDefault();
+                    CalulateNumeral(current_value, result);
                 }
             }
 
             return result;
         }
+
+        private List<string> ExtractIntoTenThousends(int number)
+        {
+            return number.ToString()
+                        .Select((item, index) => item.ToString()
+                        .PadRight(number.ToString().Length - index, '0'))
+                        .ToList();
+        }
+
+        private void CalculateThousends(int number, string result)
+        {
+            for (var i = 1; i <= number / 1000; i++)
+            {
+                result += _symbols.Where(x => x.Value == 1000)
+                                    .Select(x => x.Key)
+                                    .FirstOrDefault();
+            }
+        }
+
+        private void CalulateNumeral(int number, string result)
+        {
+            for (var i = 1; i <= number / 1000; i++)
+            {
+                result += _symbols.Where(x => x.Value == 1000)
+                                    .Select(x => x.Key)
+                                    .FirstOrDefault();
+            }
+        }
+
     }
 }
