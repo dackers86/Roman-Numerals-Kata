@@ -31,5 +31,19 @@ namespace RomanNumeralKata.Services.Tests
             // Assert
             Assert.Equal(actual, expected);
         }
+
+        [Fact]
+        public void WhenFiveIsProvided_ThenTheCorrectSymbolIsReturned()
+        {
+            // Arrange
+            var expected = "V";
+            var service = new RomanNumeralGeneratorService();
+
+            // Act
+            var actual = service.Generate(5);
+
+            // Assert
+            Assert.Equal(actual, expected);
+        }
     }
 }
