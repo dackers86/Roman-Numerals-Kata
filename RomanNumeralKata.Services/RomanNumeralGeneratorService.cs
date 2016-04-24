@@ -9,27 +9,32 @@ namespace RomanNumeralKata.Services
 {
     public class RomanNumeralGeneratorService : IRomanNumeralGenerator
     {
+        private Dictionary<string, int> _symbols = new Dictionary<string, int>()
+        {
+            { "X", 10 }, { "V", 5 }, { "I", 1 }
+        };
+
+
         public string Generate(int number)
         {
-            var result = string.Empty;
+            return GetSymbol(number);
+        }
 
-            for (var x = 0; x<number; x++)
+        private string GetSymbol(int number)
+        {
+            var _runningTotal = number;
+            var _result = string.Empty;
+
+            do
             {
-                if (number == 5)
-                {
-                    return "V";
-                }
-
-
-                if (number == 10)
-                {
-                    return "X";
-                }
-
-                result += "I";
+                var entry = _symbols.Where(x => x.Value <= number).FirstOrDefault();
+                _runningTotal -= entry.Value;
+                _result += entry.Key;
             }
+            while (_runningTotal > 0);
 
-            return result;
+            return _result;
+
         }
     }
 }
